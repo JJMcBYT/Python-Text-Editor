@@ -1,0 +1,29 @@
+html {
+    background-color: gray;
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+h1 {
+    background-color: gray;
+    color: red;
+}
+
+body {
+    background-color: black;
+    color: white;
+    margin: 25px;
+}
+
+.download {
+    color: red;
+    background-color: gray;
+}
+
+h3 {
+    text-align: left;
+}
+
+ul {
+    text-align: left;
+}
