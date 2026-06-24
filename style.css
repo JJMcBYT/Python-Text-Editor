@@ -4,20 +4,19 @@ html {
     font-family: 'Times New Roman', Times, serif;
 }
 
-h1 {
-    background-color: gray;
-    color: red;
-}
-
 body {
-    background-color: black;
-    color: white;
+    background-color: darkgray;
+    color: black;
     margin: 25px;
 }
 
-.download {
-    color: red;
+h1 {
     background-color: gray;
+    color: aquamarine;
+}
+
+h2 {
+    color: red;
 }
 
 h3 {
