@@ -2,8 +2,23 @@ from tkinter import *
 from tkinter import messagebox
 from sys import exit
 from os import remove
+import codecs
+
+messagebox.showinfo("IMPORTANT", "You dont have to add .txt to the end of file names, that is done for you")
 
 root = Tk()
+root.title("Python Text Editor")
+root.geometry("1920x1080")
+root.configure(bg="gray")
+
+topframe = Frame(bg="gray")
+
+windowtitle = Label(topframe, text="Python Text Editor", font=("Arial", 50), justify="center")
+windowtitle.pack(pady=25)
+
+Text_Input_field = Text(topframe, width="150", height="10", font=("Arial", 15), bg="white", fg="black", bd=4, yscrollcommand=True)
+Text_Input_field.pack(pady=25)
+topframe.pack()
 
 def areyousure():
     newwindow = Toplevel()
@@ -17,9 +32,63 @@ def areyousure():
     nobtn.pack()
 
 def readfunc():
-    messagebox.showinfo("Read", "read")
+    read_file = Toplevel()
+    read_file.title("Reading Files")
+
+    global input_for_name
+
+    def readandload():
+        filename = input_for_name.get() + ".txt"
+
+        if filename == ".txt":
+            messagebox.showinfo("Invalid Title", "The title cannot be empty")
+            createfunc()
+        
+        with open(filename, "r") as f:
+            file = f.read()
+        Text_Input_field.delete('1.0', 'end')
+        Text_Input_field.insert('1.0', file)
+        read_file.destroy()
+
+
+
+    read_file_title = Label(read_file, text="Please input the name of the file to read and load")
+
+    input_for_name = Entry(read_file, width=50)
+    confirm_name = Button(read_file, text="Confirm", width=25, command=readandload)
+
+    read_file_title.pack()
+    input_for_name.pack()
+    confirm_name.pack()
+
 def writefunc():
-    messagebox.showinfo("Write", "write")
+    write_file = Toplevel()
+    write_file.title("Writing to Files")
+
+    global input_for_name
+
+    def writetofile():
+        filename = input_for_name.get() + ".txt"
+
+        if filename == ".txt":
+            messagebox.showinfo("Invalid Title", "The title cannot be empty")
+            createfunc()
+        
+        filecontents = Text_Input_field.get('1.0', END)
+        with open(filename, 'w') as f:
+            f.write(filecontents)
+        write_file.destroy()
+
+
+
+    read_file_title = Label(write_file, text="Please input the name of the file to write to")
+
+    input_for_name = Entry(write_file, width=50)
+    confirm_name = Button(write_file, text="Confirm", width=25, command=writetofile)
+
+    read_file_title.pack()
+    input_for_name.pack()
+    confirm_name.pack()
 def createfunc():
 
     create_file = Toplevel()
@@ -67,25 +136,17 @@ def deletefunc():
     input_for_name.pack()
     confirm_name.pack()
 
-root.title("Python Text Editor")
-root.geometry("1920x1080")
-root.configure(bg="gray")
-
-topframe = Frame(bg="gray")
-
-windowtitle = Label(topframe, text="Python Text Editor", font=("Arial", 50), justify="center")
-windowtitle.pack(pady=25)
-
-Text_Input_field = Text(topframe, width="150", height="10", font=("Arial", 15), bg="white", fg="black", bd=4, yscrollcommand=True)
-Text_Input_field.pack(pady=25)
-topframe.pack()
 
 bottomframe = Frame(bg="gray")
+
+def cleartext():
+    Text_Input_field.delete('1.0', 'end')
 
 read = Button(bottomframe, text="Read", width=15, height=3, command=readfunc)
 write = Button(bottomframe, text="Write", width=15, height=3, command=writefunc)
 create = Button(bottomframe, text="Create", width=15, height=3, command=createfunc)
 delete = Button(bottomframe, text="Delete", width=15, height=3, command=deletefunc)
+clear = Button(bottomframe, text="Clear", width=15, height=3, command=cleartext)
 exitbutton = Button(bottomframe, text="Exit", width=60, height=4, bg="red", fg="black", activebackground="blue", bd=5, command=areyousure)
 
 bottomframe.columnconfigure(0, weight=1)
@@ -100,6 +161,7 @@ read.grid(row=0, column=0, sticky="e")
 write.grid(row=0, column=1, sticky="e")
 create.grid(row=0, column=3, sticky="w")
 delete.grid(row=0, column=4, sticky="w")
+clear.grid(row=0, column=2)
 exitbutton.grid(row=1, column=2, pady=25)
 
 bottomframe.pack(pady=10)
